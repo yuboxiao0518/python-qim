@@ -1,0 +1,13 @@
+构建docker镜像命令
+docker build -t qim .
+运行docker服务命令
+docker run -d --name qim -p 8080:80 qim
+
+开发环境启动服务命令
+uvicorn main:app --reload
+
+
+需要安装的模块
+pip install pymysql
+pip install baostock
+pip install json
