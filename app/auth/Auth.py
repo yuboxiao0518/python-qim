@@ -1,18 +1,20 @@
 from fastapi import HTTPException, Header
 from config import config_util
+import hmac
 
 
 def get_sign() -> str:
-    return '123'
+    return config_util.get_value('signature','signature')
 
 
-async def token_is_true(token: str = Header(..., description="token验证")):
+async def token_is_true(signature: str = Header(..., description="signature验证")):
     """签名验证，全局使用,验证失败就会报错"""
-    if token != get_sign():
+    compare_res = hmac.compare_digest(signature, get_sign())
+    if not compare_res:
         raise HTTPException(
             status_code=401,
-            detail="token is fail",
+            detail="signature is fail",
             headers={"X-Error": "There goes my error"},
         )
     else:
-        return {"token": token}  # 可以自定義返回值，比如user或者其他的数据
+        return {"flag": True}  # 可以自定義返回值，比如user或者其他的数据

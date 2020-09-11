@@ -3,8 +3,8 @@ from datetime import datetime
 
 
 class ResultModel(BaseModel):
-    min_average:int
-    max_average:int
+    min_average: int
+    max_average: int
     final_value: float
 
 
